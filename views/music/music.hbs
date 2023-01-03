@@ -1,0 +1,121 @@
+<div id="library-stats">
+    <div>
+        <em>Total pieces in collection:</em> 
+        <strong>{{count}}</strong>
+    </div>
+    <div class="books-by-type">
+        <label for="type-count"><em>Total music by type:</em> 
+        <strong id="music-by-type-count">{{byTypeCount}}</strong></label>
+        <select id="music-type-count" name="music-type-count" class="form-control">
+            {{#if types}}
+            {{#each types}}
+            <option {{#if_equal type ../this.selected_music_type}} selected {{/if_equal}} value="{{type}}">{{type}}</option>
+            
+            {{/each}}
+            {{/if}}
+        </select>
+    </div>
+</div>
+
+<div class="search-form-container margin-bottom">
+    <form id="search-music-form" action="/music/searchmusic" method="GET" class="margin-bottom">
+        <input class="form-control" type="text" name="musicsearch" id="music-search" placeholder="Search Composer, Work, Work #, Item #, or Conductor" />
+        <button id="search-music-submit" class="btn btn-primary search-submit-btn" type="submit"><span class="fa fa-search"></span></button>
+    </form>
+    <a href="/music/addmusic" class="btn btn-success top-float-button" title="Add a new piece to your collection">Add a piece to your collection <span class="fa fa-plus"></span></a>
+</div>
+
+<table id="music-table" class="table xs-hide table-bordered table-hover table-sm">
+    <thead>
+        <tr>
+            <th style="width:5%;" scope="col"></th>
+            <th style="width:15%;" scope="col">Composer</th>
+            <th style="width:20%;" scope="col">Work</th>
+            <th style="width:5%;" scope="col">Work #</th>
+            <th style="width:5%;" scope="col">Type</th>
+            <th style="width:10%;" scope="col">Item #</th>
+            <th style="width:35%;" scope="col">Conductor</th>
+            <th style="width:5%;" scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#if music}}
+        {{#each music}}
+        <tr>
+            <th scope="row" class="text-center">
+                <a href="/music/updatemusic?id={{id}}" class="edit-book">
+                    <span class="fa fa-pencil"></span>
+                </a>
+            </th>
+            <td class="break-word">{{composer}}</td>
+            <td class="break-word">{{work}}</td>
+            <td>{{work_number}}</td>
+            <td>{{type}}</td>
+            <td>{{item_number}}</td>
+            <td>{{conductor}}</td>
+            <td class="text-center">
+                <a href="#" class="remove-music" data-musicid="{{id}}" data-toggle="modal" data-target="#removeMusicModal">
+                    <span class="fa fa-times"></span>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+        {{/if}}
+    </tbody>
+</table>
+
+<container id="music-cards-list" class="sm-hide">
+    {{#if music}}
+    {{#each music}}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{composer}}</h5>
+            <p class="card-text">
+                <strong>Work:</strong> {{work}}<br/>
+                <strong>Work #:</strong> {{work_number}}<br/>
+                <strong>Type:</strong> {{type}}<br/>
+                <strong>Item #:</strong> {{item_number}}<br/>
+                <strong>Conductor:</strong> {{conductor}}<br/>
+            </p>
+            <a href="/music/updatemusic?id={{id}}" class="btn btn-secondary edit-book">
+                <span class="fa fa-pencil"></span>
+            </a>
+            <button class="btn btn-danger remove-music" data-musicid="{{id}}" data-toggle="modal" data-target="#removeMusicModal">
+                <span class="fa fa-times"></span>
+            </button>
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+</container>
+
+<!-- Start: Confirm Remove Music Modal -->
+<div class="modal fade" id="removeMusicModal" tabindex="-1" role="dialog" aria-labelledby="removeMusicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeMusicModalLabel">Delete Piece</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you would like to permanently remove this piece from your collection?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="removeMusicConfirm" type="button" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End: Confirm Remove Music Modal -->
+
+{{#if messageType}}
+<div class="alert alert-{{messageType}}" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/if}}

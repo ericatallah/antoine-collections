@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Library Organizer</title>
+
+    <link href="/static/dist/library.bundle.css" type="text/css" rel="Stylesheet" />
+</head>
+<body>
+    <div id="loadingSpinner">
+        <span class="fa fa-spinner fa-spin"></span>
+    </div>
+    <section id="app">
+        {{> header}}
+        <div class="jumbotron">
+            {{{body}}}
+        </div>
+        {{> footer}}
+    </section>
+
+    <script src="https://kit.fontawesome.com/95dc93da07.js"></script>
+    <script src="/static/dist/library.bundle.js"></script>
+</body>
+</html>

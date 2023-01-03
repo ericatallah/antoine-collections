@@ -1,0 +1,55 @@
+<div class="container">
+    <a href="/music" class="btn btn-success top-float-button" title="Back to music search">
+        <span class="fa fa-arrow-left"></span> 
+        Back to search
+    </a>
+    <h3>Update the information for <em>{{music.composer}}: {{music.work}}</em> below:</h3>
+    <form action="/music/updatemusic/{{music.id}}" method="POST">
+        <div class="form-group">
+            <label class="sr-only" for="composer">Composer</label>
+            <input class="form-control" value="{{music.composer}}" type="text" id="composer" name="composer" placeholder="Composer" />
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="work">Work</label>
+            <input class="form-control" value="{{music.work}}" type="text" id="work" name="work" placeholder="Work" />
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="work_number">Work #</label>
+            <input class="form-control" value="{{music.work_number}}" type="text" id="work_number" name="work_number" placeholder="Work #" />
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="type">Type</label>
+            <select id="type" name="type" class="form-control">
+                {{#if types}}
+                {{#each types}}
+                    <option {{#if_equal type ../music.type}} selected {{/if_equal}} value="{{type}}">{{type}}</option>
+                {{/each}}
+                {{/if}}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="item_number">Item #</label>
+            <input class="form-control" value="{{music.item_number}}" type="text" id="item_number" name="item_number" placeholder="Item #" />
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="item_number">Conductor</label>
+            <input class="form-control" value="{{music.conductor}}" type="text" id="conductor" name="conductor" placeholder="Conductor" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update piece</button>
+    </form>
+
+    {{#if messageType}}
+    <div class="alert alert-{{messageType}}" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {{/if}}
+</div>
