@@ -24,25 +24,7 @@ const getJson = (sqlResult) => {
 };
 
 router.get('/', async (req, res) => {
-    const sql = `${constants.retrieveMusicSql} LIMIT 30;`;
-    
-    let err;
-    const countResult = await pool.query(constants.GET_MUSIC_COUNT).catch(e => err = e);
-    cached_count = countResult[0]['COUNT(id)'];
-    const types = await pool.query(constants.GET_MUSIC_TYPES).catch(e => err = e);
-    const defaultType = types[0] && types[0].type ? types[0].type : 'Ballet';
-    const byTypeCountResult = await pool.query(constants.getMusicByType(pool.escape(defaultType))).catch(e => err = e);
-    const byTypeCount = byTypeCountResult.length;
-    const music = await pool.query(sql).catch(e => err = e);
-
-    if (err) {
-        const message = 'There was an error retrieving your music, please reload this page.';
-        const messageType = 'danger';
-        console.error('Sql error: ', err);
-        res.render('music/music', { message, messageType });
-    } else {
-        res.render('music/music', { music, count: cached_count, types, byTypeCount });
-    }
+    res.redirect('/music/musicbytype/Ballet');
 });
 
 router.get('/musicbytype/:type', async (req, res) => {

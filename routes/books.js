@@ -24,24 +24,7 @@ const getJson = (sqlResult) => {
 };
 
 router.get('/', async (req, res) => {
-    const sql = `${constants.retrieveBooksSql} LIMIT 30;`;
-    
-    let err;
-    const countResult = await pool.query(constants.GET_BOOKS_COUNT).catch(e => err = e);
-    cached_count = countResult[0]['COUNT(id)'];
-    const byTypeCountResult = await pool.query(`SELECT COUNT(id) FROM book WHERE book_type_id = 1;`).catch(e => err = e);
-    const byTypeCount = byTypeCountResult[0]['COUNT(id)'];
-    const types = await pool.query(constants.GET_TYPES).catch(e => err = e);
-    const books = await pool.query(sql).catch(e => err = e);
-
-    if (err) {
-        const message = 'There was an error retrieving your books, please reload this page.';
-        const messageType = 'danger';
-        console.error('Sql error: ', err);
-        res.render('books', { message, messageType });
-    } else {
-        res.render('books', { books, count: cached_count, types, byTypeCount });
-    }
+    res.redirect('/books/booksbytype/1');
 });
 
 router.get('/booksbytype/:typeid', async (req, res) => {
