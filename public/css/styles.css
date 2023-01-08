@@ -85,7 +85,7 @@ header h1 a:hover {
 }
 
 #library-stats strong {
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 #collections > div {
@@ -136,6 +136,10 @@ header h1 a:hover {
 .search-form-container form.sticky .search-submit-btn {
     height: 45px;
     width: 50px;
+}
+
+table th, table td {
+  font-size: 0.85rem;
 }
 
 table td.break-word, table td.break-word * {
