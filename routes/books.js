@@ -4,8 +4,6 @@ const axios = require('axios');
 const pool = require('../db');
 const constants = require('../utils');
 
-let cached_count = 0;
-
 const getJson = (sqlResult) => {
     const jsonArr = [];
 
@@ -31,10 +29,8 @@ router.get('/booksbytype/:typeid', async (req, res) => {
     const id = pool.escape(req.params.typeid);
     const sql = `${constants.retrieveBooksSql} WHERE book_type_id = ${id} ORDER BY book_sub_type.sub_type, title;`;
     let err;
-    if (!cached_count) {
-        const countResult = await pool.query(constants.GET_BOOKS_COUNT).catch(e => err = e);
-        cached_count = countResult[0]['COUNT(id)'];
-    }
+    const countResult = await pool.query(constants.GET_BOOKS_COUNT).catch(e => err = e);
+    const count = countResult[0]['COUNT(id)'];
     const books = await pool.query(sql).catch(e => err = e);
     const types = await pool.query(constants.GET_TYPES).catch(e => err = e);
 
@@ -44,7 +40,7 @@ router.get('/booksbytype/:typeid', async (req, res) => {
         console.error('Sql error: ', err);
         res.status(500).json({ message, messageType });
     } else {
-        res.render('books', { books, count: cached_count, types, byTypeCount: books.length, selected_book_type_id: +req.sanitize(req.params.typeid) });
+        res.render('books', { books, count, types, byTypeCount: books.length, selected_book_type_id: +req.sanitize(req.params.typeid) });
     }
 });
 
