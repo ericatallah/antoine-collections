@@ -4,8 +4,6 @@ const axios = require('axios');
 const pool = require('../db');
 const constants = require('../utils');
 
-let cached_count = 0;
-
 const getJson = (sqlResult) => {
     const jsonArr = [];
 
@@ -31,10 +29,8 @@ router.get('/musicbytype/:type', async (req, res) => {
     const type = pool.escape(req.params.type);
     const sql = constants.getMusicByType(type);
     let err;
-    if (!cached_count) {
-        const countResult = await pool.query(constants.GET_MUSIC_COUNT).catch(e => err = e);
-        cached_count = countResult[0]['COUNT(id)'];
-    }
+    const countResult = await pool.query(constants.GET_MUSIC_COUNT).catch(e => err = e);
+    const count = countResult[0]['COUNT(id)'];
     const music = await pool.query(sql).catch(e => err = e);
     const types = await pool.query(constants.GET_MUSIC_TYPES).catch(e => err = e);
 
@@ -44,7 +40,7 @@ router.get('/musicbytype/:type', async (req, res) => {
         console.error('Sql error: ', err);
         res.status(500).json({ message, messageType });
     } else {
-        res.render('music/music', { music, count: cached_count, types, byTypeCount: music.length, selected_music_type: req.sanitize(req.params.type) });
+        res.render('music/music', { music, count, types, byTypeCount: music.length, selected_music_type: req.sanitize(req.params.type) });
     }
 });
 
