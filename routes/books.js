@@ -134,7 +134,7 @@ router.get('/addbook', async (req, res) => {
             const templateData = {
                 message,
                 messageType,
-                types: results[0],
+                types: results[0].sort((a, b) => a.type.localeCompare(b.type)),
                 sub_types: results[1],
                 languages: results[2],
                 locations: results[3]

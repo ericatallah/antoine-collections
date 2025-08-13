@@ -18,7 +18,7 @@ module.exports = {
     INNER JOIN book_language ON book.book_language_id = book_language.id
     `,
   GET_BOOKS_COUNT: 'SELECT COUNT(id) FROM book;',
-  GET_TYPES: 'SELECT * FROM book_type;',
+  GET_TYPES: 'SELECT * FROM book_type ORDER BY type ASC;',
   GET_SUB_TYPES: 'SELECT * FROM book_sub_type;',
   GET_LOCATIONS: 'SELECT * FROM book_location;',
   retrieveMusicSql: `SELECT * FROM ${MUSIC_TABLE}`,
