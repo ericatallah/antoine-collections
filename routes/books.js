@@ -112,8 +112,8 @@ router.get('/addbook', async (req, res) => {
 
     const sql = 
         `
-        SELECT * FROM book_type;
-        SELECT * FROM book_sub_type;
+        ${constants.GET_TYPES}
+        ${constants.GET_SUB_TYPES}
         SELECT * FROM book_language;
         SELECT * FROM book_location;
         `;
@@ -134,7 +134,7 @@ router.get('/addbook', async (req, res) => {
             const templateData = {
                 message,
                 messageType,
-                types: results[0].sort((a, b) => a.type.localeCompare(b.type)),
+                types: results[0],
                 sub_types: results[1],
                 languages: results[2],
                 locations: results[3]
@@ -177,8 +177,8 @@ router.get('/updatebook', async (req, res) => {
     const sql =
         `
         SELECT * FROM book WHERE id = ${id};
-        SELECT * FROM book_type;
-        SELECT * FROM book_sub_type;
+        ${constants.GET_TYPES}
+        ${constants.GET_SUB_TYPES}
         SELECT * FROM book_language;
         SELECT * FROM book_location;
         `;

@@ -19,7 +19,7 @@ module.exports = {
     `,
   GET_BOOKS_COUNT: 'SELECT COUNT(id) FROM book;',
   GET_TYPES: 'SELECT * FROM book_type ORDER BY type ASC;',
-  GET_SUB_TYPES: 'SELECT * FROM book_sub_type;',
+  GET_SUB_TYPES: 'SELECT * FROM book_sub_type ORDER BY sub_type ASC;',
   GET_LOCATIONS: 'SELECT * FROM book_location;',
   retrieveMusicSql: `SELECT * FROM ${MUSIC_TABLE}`,
   retrieveMusicOrderBy: 'ORDER BY composer ASC, type ASC',
