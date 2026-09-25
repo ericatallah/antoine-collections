@@ -20,6 +20,8 @@ pool.getConnection((err, connection) => {
             console.error('Database Error: Database has too many connections.');
         } else if (err.code === 'ECONNREFUSED') {
             console.error('Database Error: Connection was refused.');
+        } else {
+            console.error('Database Error:', err.code, err.message);
         }
     }
 
