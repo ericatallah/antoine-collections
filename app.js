@@ -3,6 +3,10 @@ const hbs = require('express-handlebars');
 const hbsHelpers = require('./views/helpers');
 const app = express();
 const expressSanitizer = require('express-sanitizer');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const PORT = process.env.PORT || 5001;
 
 app.use(express.urlencoded({ extended: true }));
